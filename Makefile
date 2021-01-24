@@ -3,7 +3,7 @@ AS := arm-none-eabi-as
 LD := arm-none-eabi-gcc
 OBJCOPY := arm-none-eabi-objcopy
 
-SOCS := mt8173 mt8163 mt8695
+SOCS := mt8173 mt8163 mt8695 mt8127
 PAYLOADS := $(SOCS:%=payloads/%_payload.bin)
 
 CFLAGS := -std=gnu99 -Os -mthumb -mcpu=cortex-a9 -fno-builtin-printf -fno-strict-aliasing -fno-builtin-memcpy -mno-unaligned-access -Wall -Wextra

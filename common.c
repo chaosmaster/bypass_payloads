@@ -43,6 +43,13 @@ int main() {
     print("Sending ACK\n");
     send_dword(0xA1A2A3A4);
 
+    // Need this for mt8127 for patching to have an effect?!
+    volatile uint32_t tmp;
+    tmp = *(uint32_t *)sbc;
+    tmp = *(uint32_t *)sla;
+    tmp = *(uint32_t *)daa;
+    (void)(tmp);
+
     // sec_cfg_sbc_enabled
     print("Patching SBC\n");
     *sbc++ = mov_r0_0;
