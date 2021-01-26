@@ -5,6 +5,5 @@
 .global start
 .section .text.start
 start:
-    mov r3, pc
-    add r3, 5
+    add r3, pc, #1
     bx r3

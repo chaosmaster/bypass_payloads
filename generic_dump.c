@@ -6,9 +6,9 @@ int (*send_word)() = 0;
 int (*send_dword)() = 0;
 
 int send_double_word(uint32_t dword){
-	send_word(dword >> 16);
-	send_word(dword);
-	return 0;
+    send_word(dword >> 16);
+    send_word(dword);
+    return 0;
 }
 
 __attribute__ ((section(".text.main"))) int main() {
@@ -16,7 +16,8 @@ __attribute__ ((section(".text.main"))) int main() {
     send_dword = 0;
     int cnt = 0;
     for (uint32_t offset = 0x100; offset < 0x10000; offset++) {
-    if (((uint32_t *)offset)[0] == 0x4FF8E92D && ((uint32_t *)offset)[1] == 0x468A4680) {
+        if (((char *)offset)[3] == 0x4F && ((char *)offset)[2] == 0xF8 && ((char *)offset)[1] == 0xE9 && ((char *)offset)[0] == 0x2D
+            && ((char *)offset)[7] == 0x46 && ((char *)offset)[6] == 0x8A && ((char *)offset)[5] == 0x46 && ((char *)offset)[4] == 0x80 ) {
             if (cnt++ > 0) {
                 send_dword = (void*)(offset | 1);
                 break;
@@ -33,7 +34,7 @@ __attribute__ ((section(".text.main"))) int main() {
     }
 
     if (send_dword){
-    	send_dword(0xC1C2C3C4);
+        send_dword(0xC1C2C3C4);
         uint32_t rev = 0;
         for (uint32_t * address = 0; address < (uint32_t *)0x20000; address++) {
             rev = (*address & 0x000000FF) << 24;
