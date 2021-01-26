@@ -2,7 +2,7 @@
 
 char SOC_NAME[] = "mt6750";
 
-void (*send_usb_response)(int, int, int) = (void*)0x55bb;
+void (*send_usb_response)(int, int, int) = (void*)0x449f;
 
 int (*send_dword)() = (void*)0x9987;
 int (*recv_dword)() = (void*)0x9953;
