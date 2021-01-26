@@ -9,7 +9,7 @@ int (*recv_dword)() = (void*)0x9953;
 // addr, sz
 int (*send_data)() = (void*)0x9A4F;
 // addr, sz, flags (=0)
-int (*recv_data)() = (void*)0x99C8;
+int (*recv_data)() = (void*)0x99C9;
 
 uint16_t* sbc = (uint16_t *)0x520a;
 uint16_t* sla = (uint16_t *)0x5222;
