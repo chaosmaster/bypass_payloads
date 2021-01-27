@@ -1,11 +1,12 @@
 #include <stdint.h>
 
 volatile uint32_t *wdt = (volatile uint32_t *)0x10007000;
+volatile uint32_t *uart_base = (volatile uint32_t *)0x11002000;
 
-volatile uint32_t *uart_reg0 = (volatile uint32_t*)0x11002014;
-volatile uint32_t *uart_reg1 = (volatile uint32_t*)0x11002000;
 
 void low_uart_put(int ch) {
+    volatile uint32_t *uart_reg0 = (volatile uint32_t*)((volatile uint32_t)uart_base + 0x14);
+    volatile uint32_t *uart_reg1 = (volatile uint32_t*)uart_base;
 
     while ( !((*uart_reg0) & 0x20) )
     {}
