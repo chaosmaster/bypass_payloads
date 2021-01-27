@@ -65,6 +65,18 @@ int main() {
     *daa++ = mov_r0_0;
     *daa = bx_lr;
 
+#ifdef SLA_PASSED
+    *(volatile char *)SLA_PASSED = 1;
+#endif
+
+#ifdef SLA_AUTH_1
+    *(volatile uint32_t *)SLA_AUTH_1 = 1;
+#endif
+
+#ifdef SLA_AUTH_2
+    *(volatile uint32_t *)SLA_AUTH_2 = -1;
+#endif
+
     //invalidate icache
     asm volatile ("mcr p15, 0, %0, c7, c5, 0" : : "r" (0));
 
@@ -78,14 +90,14 @@ int main() {
         while ( ((*uart_reg0) & 1) ) {}
         while ( 1 ) {
             recv_data(&hs, 1);
-	    if(sequence[index] == hs) break;
-	    index = 0;
-	    print("\nHandshake failed!\n");
-	}
+            if(sequence[index] == hs) break;
+            index = 0;
+            print("\nHandshake failed!\n");
+        }
         hs = ~hs;
         send_data(&hs, 1);
-	index += 1;
-	print(".");
+        index += 1;
+        print(".");
     } while(index != 4);
 
     print("\nHandshake completed!\n");
