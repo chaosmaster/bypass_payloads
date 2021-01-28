@@ -9,22 +9,21 @@ PAYLOADS := $(SOCS:%=payloads/%_payload.bin)
 CFLAGS := -std=gnu99 -Os -mthumb -mcpu=cortex-a9 -fno-builtin-printf -fno-strict-aliasing -fno-builtin-memcpy -fPIE -mno-unaligned-access -Wall -Wextra
 LDFLAGS := -nodefaultlibs -nostdlib -lgcc
 
-COMMON_OBJ = payloads/common.o payloads/start.o
-
 all: $(PAYLOADS)
 
 payloads/%_payload.bin: payloads/%.elf
 	$(OBJCOPY) -O binary $^ $@
 
-payloads/generic_%.elf: payloads/generic_%.o payloads/generic.o generic.ld
-	$(LD) -o $@ payloads/generic_$*.o payloads/generic.o $(LDFLAGS) -T generic.ld
+payloads/%.elf: payloads/%.o payloads/start.o generic.ld
+	$(LD) -o $@ payloads/$*.o payloads/start.o $(LDFLAGS) -T generic.ld
 
-payloads/%.elf: payloads/%.o $(COMMON_OBJ) %.ld
-	$(LD) -o $@ payloads/$*.o $(COMMON_OBJ) $(LDFLAGS) -T $*.ld
-
-payloads/%.o: %.c
+payloads/generic_%.o: generic_%.c
 	mkdir -p $(@D)
 	$(CC) -c -o $@ $< $(CFLAGS)
+
+payloads/%.o: common.c %.h
+	mkdir -p $(@D)
+	$(CC) -c -o $@ common.c -D DEVICE_HEADER=$*.h $(CFLAGS)
 
 payloads/%.o: %.S
 	mkdir -p $(@D)

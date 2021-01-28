@@ -1,5 +1,12 @@
 #include "common.h"
 
+#define _STRINGIFY(str) #str
+#define STRINGIFY(str) _STRINGIFY(str)
+
+#ifdef DEVICE_HEADER
+#include STRINGIFY(DEVICE_HEADER)
+#endif
+
 uint16_t mov_r0_0 = 0x2000;
 uint16_t bx_lr = 0x4770;
 
@@ -28,7 +35,7 @@ int print(char* s){
     return i;
 }
 
-int main() {
+__attribute__ ((section(".text.main"))) int main() {
 
     print("Entered ");
     print(SOC_NAME);

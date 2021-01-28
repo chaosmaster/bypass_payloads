@@ -5,5 +5,5 @@
 .global start
 .section .text.start
 start:
-    ldr r3, =main
+    add r3, pc, #1
     bx r3
