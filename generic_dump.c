@@ -11,32 +11,46 @@ int send_double_word(uint32_t dword){
     return 0;
 }
 
+uint32_t searchfunc(uint32_t startoffset,uint32_t endoffset,uint16_t *pattern,int patternsize){
+    int found=0;
+    for (uint32_t offset=startoffset; offset < endoffset ; offset+=2) {
+        uint16_t *ptr=((uint16_t*)(offset));
+        for (int i=0;i<patternsize;i++)
+        {
+            if (ptr[i]!=pattern[i]) { found=0; break; }
+            found+=1;
+            if (found==patternsize) return offset;
+        }
+    }
+    return 0;
+}
+
 __attribute__ ((section(".text.main"))) int main() {
     send_word = 0;
     send_dword = 0;
-    int cnt = 0;
     int i=0;
+    uint32_t offs1=0;
+    uint32_t offs2=0;
     uint32_t brom_bases[3] = {0x0, 0x00400000, 0x48000000};
+    uint16_t senddwordptr[4]={0xE92D,0x4FF8,0x4680,0x468A};
     for (i =  0; i < 3; ++i) {
-        for (uint32_t offset = brom_bases[i] + 0x100; offset < brom_bases[i] + 0x10000 ; offset+=2) {
-            uint16_t *ptr=((uint16_t*)(offset));
-            if (ptr[0]==0xE92D && ptr[1]==0x4FF8 && ptr[2]==0x4680 && ptr[3]==0x468A) {
-                if (cnt++ > 0) {
-                    send_dword = (void*)(offset | 1);
-                    break;
-                }
-                else {
-                    send_word = (void*)(offset | 1);
-                }
-            }
+        offs1=searchfunc(brom_bases[i] + 0x100,brom_bases[i] + 0x10000,senddwordptr,4);
+        if (offs1!=0){
+            offs2=searchfunc(offs1+2,brom_bases[i] + 0x10000,senddwordptr,4);
+            if (offs2!=0) break;
         }
-        if (send_dword || send_word) break;
     }
 
     // If we didn't find send_dword, use send_word
-    if (!send_dword && send_word) {
+    if (!offs2 && offs1) {
+        send_word=(void*)(offs1|1);
         send_dword = &send_double_word;
     }
+    else
+    {
+        send_dword=(void*)(offs2|1);
+    }
+    
 
     if (send_dword){
         send_dword(0xC1C2C3C4);
