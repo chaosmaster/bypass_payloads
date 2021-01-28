@@ -15,11 +15,12 @@ __attribute__ ((section(".text.main"))) int main() {
     send_word = 0;
     send_dword = 0;
     int cnt = 0;
-    uint32_t brom_base = 0;
-    for (int i =  0; i < 2; ++i) {
-        for (uint32_t offset = brom_base + 0x100; offset < brom_base + 0x10000 ; offset++) {
-            if (((char *)offset)[3] == 0x4F && ((char *)offset)[2] == 0xF8 && ((char *)offset)[1] == 0xE9 && ((char *)offset)[0] == 0x2D
-                && ((char *)offset)[7] == 0x46 && ((char *)offset)[6] == 0x8A && ((char *)offset)[5] == 0x46 && ((char *)offset)[4] == 0x80 ) {
+    int i=0;
+    uint32_t brom_bases[3] = {0x0, 0x00400000, 0x48000000};
+    for (i =  0; i < 3; ++i) {
+        for (uint32_t offset = brom_bases[i] + 0x100; offset < brom_bases[i] + 0x10000 ; offset+=2) {
+            uint16_t *ptr=((uint16_t*)(offset));
+            if (ptr[0]==0xE92D && ptr[1]==0x4FF8 && ptr[2]==0x4680 && ptr[3]==0x468A) {
                 if (cnt++ > 0) {
                     send_dword = (void*)(offset | 1);
                     break;
@@ -30,7 +31,6 @@ __attribute__ ((section(".text.main"))) int main() {
             }
         }
         if (send_dword || send_word) break;
-        else brom_base = 0x00400000;
     }
 
     // If we didn't find send_dword, use send_word
@@ -41,7 +41,7 @@ __attribute__ ((section(".text.main"))) int main() {
     if (send_dword){
         send_dword(0xC1C2C3C4);
         uint32_t rev = 0;
-        for (uint32_t * address = (uint32_t *)(brom_base) ; address < (uint32_t *)(brom_base + 0x20000); address++) {
+        for (uint32_t * address = (uint32_t *)(brom_bases[i]) ; address < (uint32_t *)(brom_bases[i] + 0x20000); address++) {
             rev = (*address & 0x000000FF) << 24;
             rev |= (*address & 0x0000FF00) << 8;
             rev |= (*address & 0x00FF0000) >> 8;
