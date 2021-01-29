@@ -1,4 +1,4 @@
-#include "common.h"
+#include <inttypes.h>
 
 char SOC_NAME[] = "mt8163";
 
