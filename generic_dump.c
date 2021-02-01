@@ -32,7 +32,7 @@ __attribute__ ((section(".text.main"))) int main() {
     send_word = 0;
     send_dword = 0;
     uint32_t i = 0;
-    for (uint32_t i =  0; i < (sizeof(brom_bases) / sizeof(*brom_bases)); ++i) {
+    for (i = 0; i < (sizeof(brom_bases) / sizeof(*brom_bases)); ++i) {
         send_word = (void *)searchfunc(brom_bases[i] + 0x100, brom_bases[i] + 0x10000, search_pattern, 4);
         if (send_word){
             send_dword = (void *)searchfunc((uint32_t)send_word + 1, brom_bases[i] + 0x10000, search_pattern, 4);
