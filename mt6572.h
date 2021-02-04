@@ -2,18 +2,15 @@
 
 char SOC_NAME[] = "mt6572";
 
-void (*send_usb_response)(int, int, int) = (void*)0x406AC9;
+void (*send_usb_response)(int, int, int) = (void*)0x00400000+0x6AC9;
 
-int (*send_dword)() = (void*)0x40B983;
-int (*recv_dword)() = (void*)0x40B8D3;
-// addr, sz
-int (*send_data)() = (void*)0x40BA4B;
-// addr, sz, flags (=0)
-int (*recv_data)() = (void*)0x40B9C5;
+int (*usbdl_put_data)() = (void*)0x00400000+0xBA4B;
+int (*usbdl_get_data)() = (void*)0x00400000+0xB9C5;
 
-uint16_t* sbc = (uint16_t *)0x4077BE;
-uint16_t* sla = (uint16_t *)0x4077D6;
-uint16_t* daa = (uint16_t *)0x4077FA;
+volatile uint32_t mode=0;
+volatile uint32_t *SEC_REG2=0;
+volatile uint32_t **SEC_REG=(volatile uint32_t **)0x11141E80;
+volatile uint32_t SEC_OFFSET=0x40;
 
 volatile uint32_t *uart_reg0 = (volatile uint32_t*)0x11005014;
 volatile uint32_t *uart_reg1 = (volatile uint32_t*)0x11005000;

@@ -1,3 +1,4 @@
+// (c) 2021 by k4y0z
 #define _STRINGIFY(str) #str
 #define STRINGIFY(str) _STRINGIFY(str)
 
@@ -5,14 +6,9 @@
 #include STRINGIFY(DEVICE_HEADER)
 #endif
 
-uint16_t mov_r0_0 = 0x2000;
-uint16_t bx_lr = 0x4770;
-
 void low_uart_put(int ch) {
-
     while ( !((*uart_reg0) & 0x20) )
     {}
-
     *uart_reg1 = ch;
 }
 
@@ -33,55 +29,31 @@ int print(char* s){
     return i;
 }
 
-__attribute__ ((section(".text.main"))) int main() {
+volatile uint8_t fusebuffer[0x100] = {0};
 
+__attribute__ ((section(".text.main"))) int main() {
     print("Entered ");
     print(SOC_NAME);
     print(" brom patcher\n");
 
-    print("Copyright k4y0z 2021\n");
+    print("Copyright k4y0z/bkerler 2021\n");
 
     //This is so we don't get a USB-Timeout
-    print("Send USB response\n");
+    print("R:USB\n");
     send_usb_response(1,0,1);
     
-    print("Sending ACK\n");
-    send_dword(0xA1A2A3A4);
+    print("S:ACK\n");
+    uint32_t ack=0xA4A3A2A1;
+    usbdl_put_data(&ack,4);
 
-    // Need this for mt8127 for patching to have an effect?!
-    volatile uint32_t tmp;
-    tmp = *(uint32_t *)sbc;
-    tmp = *(uint32_t *)sla;
-    tmp = *(uint32_t *)daa;
-    (void)(tmp);
+    fusebuffer[0] = 0xB;
+    fusebuffer[SEC_OFFSET] = 0xB; // 1026D4+0x40, << 0x1e < 0x0 (DAA),  & << 0x1f !=0 (SLA), << 0x1c < 0x0 (SBC)
+    *SEC_REG = (volatile uint32_t *)&fusebuffer; // 1026D4, !=0 (SLA, SBC)
 
-    // sec_cfg_sbc_enabled
-    print("Patching SBC\n");
-    *sbc++ = mov_r0_0;
-    *sbc = bx_lr;
-
-    // sec_cfg_sla_enabled
-    print("Patching SLA\n");
-    *sla++ = mov_r0_0;
-    *sla = bx_lr;
-
-    // sec_cfg_daa_enabled
-    print("Patching DAA\n");
-    *daa++ = mov_r0_0;
-    *daa = bx_lr;
-
-#ifdef SLA_PASSED
-    *(volatile char *)SLA_PASSED = 1;
-#endif
-
-#ifdef SLA_AUTH_1
-    *(volatile uint32_t *)SLA_AUTH_1 = 1;
-#endif
-
-#ifdef SLA_AUTH_2
-    *(volatile uint32_t *)SLA_AUTH_2 = -1;
-#endif
-
+    if (mode==1)
+    {
+        *SEC_REG2=0xB;
+    }
     //invalidate icache
     asm volatile ("mcr p15, 0, %0, c7, c5, 0" : : "r" (0));
 
@@ -89,21 +61,20 @@ __attribute__ ((section(".text.main"))) int main() {
     unsigned int index = 0;
     unsigned char hs = 0;
 
-    print("Waiting for handshake...\n");
-
+    print("W:Handshake\n");
     do {
         while ( ((*uart_reg0) & 1) ) {}
         while ( 1 ) {
-            recv_data(&hs, 1);
+            usbdl_get_data(&hs, 1);
             if(sequence[index] == hs) break;
             index = 0;
-            print("\nHandshake failed!\n");
+            print("\nF:Handshake\n");
         }
         hs = ~hs;
-        send_data(&hs, 1);
+        usbdl_put_data(&hs, 1);
         index += 1;
         print(".");
     } while(index != 4);
 
-    print("\nHandshake completed!\n");
+    print("\nA:Handshake\n");
 }

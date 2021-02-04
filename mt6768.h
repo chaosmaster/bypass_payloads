@@ -1,11 +1,11 @@
 #include <inttypes.h>
 
-char SOC_NAME[] = "mt6739";
+char SOC_NAME[] = "mt6768";
 
-void (*send_usb_response)(int, int, int) = (void*)0x508B;
+void (*send_usb_response)(int, int, int) = (void*)0x2C2F;
 
-int (*usbdl_put_data)() = (void*)0xDEFF;
-int (*usbdl_get_data)() = (void*)0xDE71;
+int (*usbdl_put_data)() = (void*)0xC173;
+int (*usbdl_get_data)() = (void*)0xC0E5;
 
 volatile uint32_t mode=1;
 volatile uint32_t **SEC_REG=(volatile uint32_t **)0x102A8C;
