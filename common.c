@@ -1,4 +1,4 @@
-// (c) 2021 by k4y0z
+// (c) 2021 by bkerler, k4y0z
 #define _STRINGIFY(str) #str
 #define STRINGIFY(str) _STRINGIFY(str)
 
@@ -29,7 +29,7 @@ int print(char* s){
     return i;
 }
 
-volatile uint8_t fusebuffer[0x100] = {0};
+volatile uint32_t fusebuffer[0x40/4] = {0};
 
 __attribute__ ((section(".text.main"))) int main() {
     print("Entered ");
@@ -46,14 +46,19 @@ __attribute__ ((section(".text.main"))) int main() {
     uint32_t ack=0xA4A3A2A1;
     usbdl_put_data(&ack,4);
 
-    fusebuffer[0] = 0xB;
-    fusebuffer[SEC_OFFSET] = 0xB; // 1026D4+0x40, << 0x1e < 0x0 (DAA),  & << 0x1f !=0 (SLA), << 0x1c < 0x0 (SBC)
-    *SEC_REG = (volatile uint32_t *)&fusebuffer; // 1026D4, !=0 (SLA, SBC)
-
-    if (mode==1)
-    {
-        *SEC_REG2=0xB;
+    if (mode==0) {
+        fusebuffer[0] = 0x1;
+        fusebuffer[SEC_OFFSET/4] = 0xB; // 1026D4+0x40, << 0x1e < 0x0 (DAA),  & << 0x1f !=0 (SLA), << 0x1c < 0x0 (SBC)
+        *SEC_REG = (volatile uint32_t *)&fusebuffer; // 1026D4, !=0 (SLA, SBC)
     }
+    else if (mode==1)
+    {
+        fusebuffer[SEC_OFFSET/4] = 0x700; // 1026D4+0x40, << 0x1e < 0x0 (DAA),  & << 0x1f !=0 (SLA), << 0x1c < 0x0 (SBC)
+        *((volatile uint32_t *)(SEC_REG + 2)) = 0xB;
+        *SEC_REG2 = (volatile uint32_t *)&fusebuffer; // 1026D4, !=0 (SLA, SBC)
+        *SEC_REG = (volatile uint32_t *)&fusebuffer; // 1026D4, !=0 (SLA, SBC)
+    }
+
     //invalidate icache
     asm volatile ("mcr p15, 0, %0, c7, c5, 0" : : "r" (0));
 

@@ -7,8 +7,8 @@ void (*send_usb_response)(int, int, int) = (void*)0x4293;
 int (*usbdl_put_data)() = (void*)0x95DB;
 int (*usbdl_get_data)() = (void*)0x9555;
 
-volatile uint32_t mode=0;
-volatile uint32_t *SEC_REG2=0;
+const int mode=0;
+volatile uint32_t **SEC_REG2=0;
 volatile uint32_t **SEC_REG=(volatile uint32_t **)0x1026D4;
 volatile uint32_t SEC_OFFSET=0x40;
 
