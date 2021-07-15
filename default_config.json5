@@ -1,0 +1,137 @@
+{
+    "0x6261": { // mt6261
+        "payload": "mt6261_payload.bin",
+        "var_1": 0x28,
+        "watchdog_address": 0xA0030000,
+    },
+
+    "0x6572": { // mt6572
+        "payload": "mt6572_payload.bin",
+        "payload_address": 0x10036A0
+    },
+
+    "0x6580": { // mt6580
+        "payload": "mt6580_payload.bin"
+    },
+
+    "0x6582": { // mt6582
+        "payload": "mt6582_payload.bin"
+    },
+
+    "0x321": { // mt6735
+        "watchdog_address": 0x10212000,
+        "var_0": 0x10,
+        "var_1": 0x28,
+        "payload": "mt6735_payload.bin"
+    },
+
+    "0x335": { // mt6737
+        "watchdog_address": 0x10212000,
+        "var_0": 0x10,
+        "var_1": 0x28,
+        "payload": "mt6737_payload.bin"
+    },
+
+    "0x699": { // mt6739
+        "var_0": 0x20,
+        "var_1": 0xB4,
+        "payload": "mt6739_payload.bin"
+    },
+
+    "0x337": { // mt6753
+        "watchdog_address": 0x10212000,
+        "var_1": 0x28,
+        "payload": "mt6753_payload.bin"
+    },
+
+    "0x326": { // mt6755
+        "payload": "mt6755_payload.bin"
+    },
+
+    "0x551": { // mt6757
+        "payload": "mt6757_payload.bin"
+    },
+
+    "0x717": { // mt6761
+        "var_1": 0x25,
+        "payload": "mt6761_payload.bin"
+    },
+
+    "0x690": { // mt6763
+        "var_1": 0x7F,
+        "payload": "mt6763_payload.bin"
+    },
+
+    "0x766": { // mt6765
+        "var_0": 0x2C,
+        "var_1": 0x25,
+        "payload": "mt6765_payload.bin"
+    },
+
+    "0x707": { // mt6768
+        "var_0": 0x2C,
+        "var_1": 0x25,
+        "payload": "mt6768_payload.bin"
+    },
+
+    "0x788": { // mt6771
+        "var_0": 0x20,
+        "payload": "mt6771_payload.bin"
+    },
+
+    "0x725": { // mt6779
+        "payload": "mt6779_payload.bin"
+    },
+
+    "0x813": { // mt6785
+        "payload": "mt6785_payload.bin"
+    },
+
+    "0x6795": { // mt6795
+        "payload": "mt6795_payload.bin"
+    },
+
+    "0x279": { // mt6797
+        "payload": "mt6797_payload.bin"
+    },
+
+    "0x816": { // mt6885
+        "payload": "mt6885_payload.bin"
+    },
+
+    "0x8127": { // mt8127
+        "payload": "mt8127_payload.bin"
+    },
+
+    "0x8163": { // mt8163
+        "var_1": 0xB1,
+        "payload": "mt8163_payload.bin"
+    },
+
+    "0x8167": { // mt8516
+        "var_1": 0xCC,
+        "payload": "mt8167_payload.bin"
+    },
+
+    "0x8172": { // mt8173
+        "payload": "mt8173_payload.bin",
+        "payload_address": 0x120A00
+    },
+    
+    "0x8695": { // mt8695
+        "payload": "mt8695_payload.bin",
+        "loader": "mt8695_loader_payload.bin",
+        "ps": 0x103088,
+        "pt": 0x1031f9,
+        "ptrs": [ 0x103043, 0xcc3a ]
+    },
+
+    "0x886": { // mt6873
+        "payload": "mt6873_payload.bin"
+    },
+
+    "0x562": { // mt6799
+        "watchdog_address": 0x10211000,
+        "payload": "mt6799_payload.bin"
+    }
+}
