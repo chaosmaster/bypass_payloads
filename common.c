@@ -6,6 +6,14 @@
 #include STRINGIFY(DEVICE_HEADER)
 #endif
 
+#ifndef PREHANDSHAKE
+#define PREHANDSHAKE {}
+#endif
+
+#ifndef POSTHANDSHAKE
+#define POSTHANDSHAKE {}
+#endif
+
 void low_uart_put(int ch) {
     while ( !((*uart_reg0) & 0x20) )
     {}
@@ -66,6 +74,8 @@ __attribute__ ((section(".text.main"))) int main() {
     unsigned int index = 0;
     unsigned char hs = 0;
 
+    PREHANDSHAKE
+
     print("W:Handshake\n");
     do {
         while ( ((*uart_reg0) & 1) ) {}
@@ -82,4 +92,6 @@ __attribute__ ((section(".text.main"))) int main() {
     } while(index != 4);
 
     print("\nA:Handshake\n");
+
+    POSTHANDSHAKE
 }
