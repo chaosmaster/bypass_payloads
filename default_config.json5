@@ -137,5 +137,13 @@
     "0x562": { // mt6799
         "watchdog_address": 0x10211000,
         "payload": "mt6799_payload.bin"
+    },
+
+    "0x996": { // mt6853
+        "payload": "mt6853_payload.bin",
+        "loader": "mt6853_loader_payload.bin",
+        "ps": 0x10288c,
+        "pt": 0x102aad,
+        "ptrs": [ 0x102847 ]
     }
 }
