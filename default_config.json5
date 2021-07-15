@@ -65,7 +65,11 @@
     "0x766": { // mt6765
         "var_0": 0x2C,
         "var_1": 0x25,
-        "payload": "mt6765_payload.bin"
+        "payload": "mt6765_payload.bin",
+        "loader": "mt6765_loader_payload.bin",
+        "ps": 0x10286c,
+        "pt": 0x102a35,
+        "ptrs": [ 0x102823 ]
     },
 
     "0x707": { // mt6768

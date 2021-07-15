@@ -14,3 +14,14 @@ volatile uint32_t SEC_OFFSET=0x28;
 
 volatile uint32_t *uart_reg0 = (volatile uint32_t*)0x11002014;
 volatile uint32_t *uart_reg1 = (volatile uint32_t*)0x11002000;
+
+int (*cmd_handler)() = (void*)0xcaed;
+
+void prehandshake() {
+    volatile uint32_t *blacklist = (volatile uint32_t*)0x102828;
+    *blacklist = 0xA;
+    *(blacklist - 1) = *(blacklist - 1) &~ 0x40000000;
+}
+
+#define PREHANDSHAKE prehandshake();
+#define POSTHANDSHAKE cmd_handler();

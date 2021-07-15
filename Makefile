@@ -3,7 +3,7 @@ AS := arm-none-eabi-as
 LD := arm-none-eabi-gcc
 OBJCOPY := arm-none-eabi-objcopy
 
-SOCS := mt6261 mt6572 mt6580 mt6582 mt6595 mt6735 mt6737 mt6739 mt6753 mt6755 mt6757 mt6761 mt6763 mt6765 mt6779 mt6768 mt6771 mt6785 mt6795 mt6797 mt6799 mt6873 mt6885 mt8127 mt8163 mt8167 mt8173 mt8695 generic_dump generic_reboot generic_uart_dump mt8695_loader
+SOCS := mt6261 mt6572 mt6580 mt6582 mt6595 mt6735 mt6737 mt6739 mt6753 mt6755 mt6757 mt6761 mt6763 mt6765 mt6779 mt6768 mt6771 mt6785 mt6795 mt6797 mt6799 mt6873 mt6885 mt8127 mt8163 mt8167 mt8173 mt8695 generic_dump generic_reboot generic_uart_dump mt8695_loader mt6765_loader
 PAYLOADS := $(SOCS:%=payloads/%_payload.bin)
 
 CFLAGS := -std=gnu99 -Os -mthumb -mcpu=cortex-a9 -fno-builtin-printf -fno-strict-aliasing -fno-builtin-memcpy -fPIE -mno-unaligned-access -Wall -Wextra
