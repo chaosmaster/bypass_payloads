@@ -20,7 +20,7 @@ int (*cmd_handler)() = (void*)0xf831;
 void prehandshake() {
     volatile uint32_t *blacklist = (volatile uint32_t*)0x10284c;
     blacklist[0] = 0xA;
-    blacklist[-1] &= ~0x40000000;
+    blacklist[-1] &= ~0xFF000000;
 }
 
 #define PREHANDSHAKE prehandshake();
