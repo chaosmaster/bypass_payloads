@@ -66,9 +66,9 @@
         "var_0": 0x2C,
         "var_1": 0x25,
         "payload": "mt6765_payload.bin",
-        "loader": "mt6765_loader_payload.bin",
-        "ps": 0x10286c,
-        "pt": 0x102a35,
+        "ptr_send": 0x10286c,
+        "ptr_target": 0x102a35,
+        "ptr_usbdl": 0xbdc0,
         "ptrs": [ 0x102823 ]
     },
 
@@ -124,9 +124,9 @@
     
     "0x8695": { // mt8695
         "payload": "mt8695_payload.bin",
-        "loader": "mt8695_loader_payload.bin",
-        "ps": 0x103088,
-        "pt": 0x1031f9,
+        "ptr_send": 0x103088,
+        "ptr_target": 0x1031f9,
+        "ptr_usbdl": 0xbeec,
         "ptrs": [ 0x103043, 0xcc3a ]
     },
 
@@ -141,9 +141,9 @@
 
     "0x996": { // mt6853
         "payload": "mt6853_payload.bin",
-        "loader": "mt6853_loader_payload.bin",
-        "ps": 0x10288c,
-        "pt": 0x102aad,
-        "ptrs": [ 0x102847 ]
+        "ptr_send": 0x10288c,
+        "ptr_target": 0x102aad,
+        "ptr_usbdl": 0xea64,
+        "ptrs": [ 0x102847 ],
     }
 }
