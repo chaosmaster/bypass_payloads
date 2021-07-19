@@ -142,7 +142,7 @@
     "0x989": { // mt6833
         "payload": "mt6833_payload.bin",
         "ptr_send": 0x102884,
-        "ptr_target": 0x102ab0,
+        "ptr_target": 0x102ab1,
         "ptr_usbdl": 0x3b79,
         "ptrs": [ 0x10283f ],
     },
