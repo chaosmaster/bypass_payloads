@@ -143,7 +143,7 @@
         "payload": "mt6833_payload.bin",
         "ptr_send": 0x102884,
         "ptr_target": 0x102ab1,
-        "ptr_usbdl": 0x3b79,
+        "ptr_usbdl": 0xdfe0,
         "ptrs": [ 0x10283f ],
     },
 
