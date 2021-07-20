@@ -6,14 +6,6 @@
 #include STRINGIFY(DEVICE_HEADER)
 #endif
 
-#ifndef PREHANDSHAKE
-#define PREHANDSHAKE {}
-#endif
-
-#ifndef POSTHANDSHAKE
-#define POSTHANDSHAKE {}
-#endif
-
 void low_uart_put(int ch) {
     while ( !((*uart_reg0) & 0x20) )
     {}
@@ -40,6 +32,23 @@ int print(char* s){
 volatile uint32_t fusebuffer[0x40/4] = {0};
 
 __attribute__ ((section(".text.main"))) int main() {
+
+#ifdef PAYLOAD_2_0
+    //Fix ptr_send
+    *(volatile uint32_t *)(usbdl_ptr[0] + 8) = (uint32_t)usbdl_ptr[2];
+
+    int (*usbdl_get_data)() = usbdl_ptr[1];
+
+    int usbdl_put_data(void* data, uint32_t size) {;
+        (usbdl_ptr[2])(data, size);
+        return (usbdl_ptr[3])();
+    }
+
+#define CMD_HANDLER cmd_handler()
+#else
+#define CMD_HANDLER 0
+#endif
+
     print("Entered ");
     print(SOC_NAME);
     print(" brom patcher\n");
@@ -74,8 +83,6 @@ __attribute__ ((section(".text.main"))) int main() {
     unsigned int index = 0;
     unsigned char hs = 0;
 
-    PREHANDSHAKE
-
     print("W:Handshake\n");
     do {
         while ( ((*uart_reg0) & 1) ) {}
@@ -93,5 +100,5 @@ __attribute__ ((section(".text.main"))) int main() {
 
     print("\nA:Handshake\n");
 
-    POSTHANDSHAKE
+    return CMD_HANDLER;
 }
