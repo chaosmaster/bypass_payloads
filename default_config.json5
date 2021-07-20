@@ -66,10 +66,8 @@
         "var_0": 0x2C,
         "var_1": 0x25,
         "payload": "mt6765_payload.bin",
-        "ptr_send": 0x10286c,
-        "ptr_target": 0x102a35,
         "ptr_usbdl": 0xbdc0,
-        "ptrs": [ 0x102823 ]
+        "ptr_da": 0xc28c
     },
 
     "0x707": { // mt6768
@@ -80,7 +78,9 @@
 
     "0x788": { // mt6771
         "var_0": 0x20,
-        "payload": "mt6771_payload.bin"
+        "payload": "mt6771_payload.bin",
+        "ptr_usbdl": 0xdebc,
+        "ptr_da": 0xe388
     },
 
     "0x725": { // mt6779
@@ -124,10 +124,8 @@
     
     "0x8695": { // mt8695
         "payload": "mt8695_payload.bin",
-        "ptr_send": 0x103088,
-        "ptr_target": 0x1031f9,
         "ptr_usbdl": 0xbeec,
-        "ptrs": [ 0x103043, 0xcc3a ]
+        "ptr_da": 0xc3f8,
     },
 
     "0x886": { // mt6873
@@ -141,17 +139,13 @@
 
     "0x989": { // mt6833
         "payload": "mt6833_payload.bin",
-        "ptr_send": 0x102884,
-        "ptr_target": 0x102ab1,
         "ptr_usbdl": 0xdfe0,
-        "ptrs": [ 0x10283f ],
+        "ptr_da": 0xe4a0
     },
 
     "0x996": { // mt6853
         "payload": "mt6853_payload.bin",
-        "ptr_send": 0x10288c,
-        "ptr_target": 0x102aad,
         "ptr_usbdl": 0xea64,
-        "ptrs": [ 0x102847 ],
+        "ptr_da": 0xef24
     }
 }
