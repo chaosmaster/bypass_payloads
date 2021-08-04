@@ -58,7 +58,7 @@ __attribute__ ((section(".text.main"))) int main() {
     //This is so we don't get a USB-Timeout
     print("R:USB\n");
     send_usb_response(1,0,1);
-    
+
     print("S:ACK\n");
     uint32_t ack=0xA4A3A2A1;
     usbdl_put_data(&ack,4);
@@ -74,6 +74,16 @@ __attribute__ ((section(".text.main"))) int main() {
         *((volatile uint32_t *)(SEC_REG + 2)) = 0xB;
         *SEC_REG2 = (volatile uint32_t *)&fusebuffer; // 1026D4, !=0 (SLA, SBC)
         *SEC_REG = (volatile uint32_t *)&fusebuffer; // 1026D4, !=0 (SLA, SBC)
+    }
+
+    if (bladdr)
+    {
+        *bladdr=0;
+    }
+
+    if (bladdr2)
+    {
+        *bladdr2=0;
     }
 
     //invalidate icache

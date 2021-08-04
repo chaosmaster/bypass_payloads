@@ -1,16 +1,17 @@
 #include <inttypes.h>
-
+#define PAYLOAD_2_0
 char SOC_NAME[] = "mt8163";
 
 void (*send_usb_response)(int, int, int) = (void*)0x6d6f;
-
-int (*usbdl_put_data)() = (void*)0xC10F;
-int (*usbdl_get_data)() = (void*)0xC089;
+int (*(*usbdl_ptr))() = (void*)0xc12c;
 
 const int mode=0;
-volatile uint32_t **SEC_REG2=0;
-volatile uint32_t **SEC_REG=(volatile uint32_t **)0x1027DC;
+volatile uint32_t **SEC_REG=(volatile uint32_t **)0x1027dc;
+volatile uint32_t **SEC_REG2=(volatile uint32_t **)0x0;
 volatile uint32_t SEC_OFFSET=0x40;
-
+volatile uint32_t *bladdr=(volatile uint32_t *)0x102868;
+volatile uint32_t *bladdr2=(volatile uint32_t *)0x1072dc;
 volatile uint32_t *uart_reg0 = (volatile uint32_t*)0x11002014;
 volatile uint32_t *uart_reg1 = (volatile uint32_t*)0x11002000;
+
+int (*cmd_handler)() = (void*)0xccb3;
