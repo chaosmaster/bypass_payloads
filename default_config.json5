@@ -26,7 +26,7 @@
 
     "0x6592": { // mt6592
         "payload": "mt6592_payload.bin",
-        "ptr_usbdl": 0xea64,
+        "ptr_usbdl": 0xa564,
         "ptr_da": 0xa9ec,
     },
 
