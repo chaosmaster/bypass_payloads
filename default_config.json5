@@ -14,6 +14,7 @@
 
     "0x6580": { // mt6580
         "payload": "mt6580_payload.bin",
+        "var_1": 0xAC,
         "ptr_usbdl": 0xb60c,
         "ptr_da": 0xba94,
     },
@@ -28,6 +29,12 @@
         "payload": "mt6592_payload.bin",
         "ptr_usbdl": 0xa564,
         "ptr_da": 0xa9ec,
+    },
+
+    "0x6595": { // mt6595
+        "payload": "mt6595_payload.bin",
+        "ptr_usbdl": 0xb218,
+        "ptr_da": 0xb6a0,
     },
 
     "0x321": { // mt6735
