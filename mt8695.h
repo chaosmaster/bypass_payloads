@@ -9,8 +9,10 @@ const int mode=0;
 volatile uint32_t **SEC_REG=(volatile uint32_t **)0x102fbc;
 volatile uint32_t **SEC_REG2=(volatile uint32_t **)0x0;
 volatile uint32_t SEC_OFFSET=0x40;
-volatile uint32_t *bladdr=(volatile uint32_t *)0x103048;
-volatile uint32_t *bladdr2=(volatile uint32_t *)0x106ec4;
+//volatile uint32_t *bladdr=(volatile uint32_t *)0x103048;
+//volatile uint32_t *bladdr2=(volatile uint32_t *)0x106ec4;
+volatile uint32_t *bladdr=(volatile uint32_t *)0;
+volatile uint32_t *bladdr2=(volatile uint32_t *)0;
 volatile uint32_t *uart_reg0 = (volatile uint32_t*)0x11003014;
 volatile uint32_t *uart_reg1 = (volatile uint32_t*)0x11003000;
 
